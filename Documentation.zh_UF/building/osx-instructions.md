@@ -1,14 +1,14 @@
 在OS X上构建CoreCLR
 =====================
 
-This guide will walk you through building CoreCLR on OS X. We'll start by showing how to set up your environment from scratch.
+这份指南会一步一步带你在OS X上构建CoreCLR。让我们从设置编译环境开始。
 
 环境
 ===========
 
-These instructions were validated on OS X Yosemite, although they probably work on earlier versions. Pull Requests are welcome to address other environments.
+下面的步骤在OS X Yosemite上验证通过，但在之前的版本上应该也行。欢迎提交针对其他环境的Pull Request。
 
-If your machine has Command Line Tools for XCode 6.3 installed, you'll need to update them to the 6.3.1 version or higher in order to successfully build. There was an issue with the headers that shipped with version 6.3 that was subsequently fixed in 6.3.1.
+如果安装的是Command Line Tools for XCode 6.3，那么需要升级到6.3.1或者更高的版本才能完成构建。6.3版的头文件有个问题，在6.3.1里修复了。
 
 Git设置
 ---------
@@ -28,9 +28,9 @@ dotnet-mbp:git richlander$ git clone https://github.com/dotnet/corefx
 CMake
 -----
 
-CoreCLR has a dependency on CMake for the build. You can download it from [CMake downloads](http://www.cmake.org/download/).
+CoreCLR的构建过程依赖于CMake。你可以从 [CMake downloads](http://www.cmake.org/download/) 下载。
 
-或者，你也可以通过[Homebrew](http://brew.sh/)安装CMake：
+或者，你也可以通过 [Homebrew](http://brew.sh/) 安装CMake：
 
 ```sh
 dotnet-mbp:~ richlander$ brew install cmake
@@ -38,7 +38,7 @@ dotnet-mbp:~ richlander$ brew install cmake
 
 ICU
 ---
-ICU（International Components for Unicode）也是构建所必须的。你可以通过[Homebrew](http://brew.sh/)安装它。
+ICU（International Components for Unicode）也是构建所必须的。你可以通过 [Homebrew](http://brew.sh/) 安装它。
 
 ```sh
 brew install icu4c
@@ -47,7 +47,7 @@ brew link --force icu4c
 
 OpenSSL
 -------
-CoreFX加密库基于OpenSSL构建。OS X自带的OpenSSL版本（0.9.8）已经不再被官方支持，因此我们需要安装一个新版本。你可以通过[Homebrew](http://brew.sh)安装。
+CoreFX加密库基于OpenSSL构建。OS X自带的OpenSSL版本（0.9.8）已经不再被官方支持，因此我们需要安装一个新版本。你可以通过 [Homebrew](http://brew.sh) 安装。
 
 ```sh
 brew install openssl
@@ -75,18 +75,18 @@ ln -s /usr/local/opt/openssl/lib/pkgconfig/openssl.pc /usr/local/lib/pkgconfig/
 构建运行时和Microsoft Core Library
 ============================================
 
-To Build CoreCLR, run build.sh from the root of the coreclr repo.
+在coreclr代码库的根目录运行`build.sh`构建CoreCLR：
 
 ```sh
 dotnet-mbp:~ richlander$ cd ~/git/coreclr
 dotnet-mbp:coreclr richlander$ ./build.sh
 ```
 
-After the build is completed, there should some files placed in `bin/Product/OSX.x64.Debug`. The ones we are interested in are:
+构建完成后，生成的文件放在`bin/Product/OSX.x64.Debug`中。我们感兴趣的文件有：
 
-- `corerun`: The command line host. This program loads and starts the CoreCLR runtime and passes the managed program you want to run to it.
-- `libcoreclr.dylib`: The CoreCLR runtime itself.
-- `mscorlib.dll`: Microsoft Core Library.
+- `corerun`：命令行宿主程序。这个程序加载并启动CoreCLR运行时，然后运行你交给它的托管程序。
+- `libcoreclr.dylib`：CoreCLR运行时。
+- `mscorlib.dll`：Microsoft Core Library。
 
 构建Framework
 ===================
