@@ -1,61 +1,38 @@
-.NET Core通用语言运行时 (CoreCLR)
+.NET Core通用语言运行时（CoreCLR）
 ===========================
 
-This repository contains complete source code the runtime of [.NET Core](http://dotnet.github.io).
-If you are new to .NET Core start with the [About .NET](https://docs.microsoft.com/en-us/dotnet/articles/about/) 
-that quickly points you to [.NET Core Tutorials](https://docs.microsoft.com/en-us/dotnet/articles/core/getting-started)
+这个代码库包含 [.NET Core](http://dotnet.github.io) 运行时的完整代码。如果你刚接触 .NET Core ，那么请从 [About .NET](https://docs.microsoft.com/en-us/dotnet/articles/about/) 入手，它很快会把你引向 [.NET Core Tutorials](https://docs.microsoft.com/en-us/dotnet/articles/core/getting-started) 。
 
 
-.NET Core is best thought of as 'agile .NET'.   Generally speaking it is the same as 
-the [Desktop .NET Framework](https://en.wikipedia.org/wiki/.NET_Framework)
-distributed as part of the Windows operating system, but it is a cross platform 
-(Windows, Linux, macOS) and cross architecture (x86, x64, arm) subset that can be deployed
-as part of the application (if desired), and thus can be updated quickly to fix bugs or add features.  
+你可以将 .NET Core 看做是 *敏捷版 .NET* 。简单来说它类似于Windows系统自带的 [Desktop .NET Framework](https://en.wikipedia.org/wiki/.NET_Framework) 的子集，但是它跨平台（Windows/Linux/macOS）并且跨体系（x86/x64/arm），而且可以作为应用程序的一部分部署，因此也能够在修正bug或者添加功能时更方便的更新。  
 
-## 如果你只是想使用.NET Core
+## 如果你只是想使用 .NET Core
 
-Most users don't need to build .NET Core from source since there is already an built and tested version for any supported platform.
-You can get the latest **released** version of the .NET Core SDK by following the instructions on 
-the [.NET Core Getting Started](http://dotnet.github.io/getting-started/) page.
-If you need the most up to date (daily) version of this .NET Core installer you can get it from the
-[latest Installers of .NET Core and .NET Core SDK](https://github.com/dotnet/cli#installers-and-binaries).
+绝大多数用户并不需要从源代码自己构建 .NET Core ，在我们支持的平台上都已经提供了经过了测试的预编译版本。你可以从 [.NET Core Getting Started](http://dotnet.github.io/getting-started/) 页面下载到最新的 **released** 版 .NET Core SDK 。如果你需要最新（每日构建）版本的 .NET Core 安装程序，可以去 [latest Installers of .NET Core and .NET Core SDK](https://github.com/dotnet/cli#installers-and-binaries) 页面下载。
 
 ## 想了解代码之外的内容？
 
-In addition to providing the source code, this repository also acts as a useful nexus for things
-related to .NET Core including:
+除了提供源代码，这个代码库还扮演着 .NET Core 相关内容纽带的角色：
 
- * Want to **learn more** about .NET Runtime Internals?  See the [Documentation on the .NET Core Runtime](Documentation/README.md) page.
- * Need to **log a issue** or Provide Feedback?   See then [Issues and Feedback Page](Documentation/workflow/IssuesFeedbackEngagement.md) page.
+ * 想要**进一步学习** .NET 运行时的内部机制？请阅读 [Documentation on the .NET Core Runtime](Documentation/README.md) 。
+ * 想要**报告一个问题**或者提供反馈？请阅读 [Issues and Feedback Page](Documentation/workflow/IssuesFeedbackEngagement.md) 页面。
  * Want to **chat** with other members of the CoreCLR community?  See the [Chat Section](Documentation/workflow/IssuesFeedbackEngagement.md#Chat-with-the-CoreCLR-community) page.
  * Need a **current build** or **test results** of the CoreCLR repository?   See the [Official and Daily Builds](Documentation/workflow/OfficalAndDailyBuilds.md) page.
  * If you want powerful search of the source code for both CoreClr and CoreFx see [.NET Source Code Index](https://source.dot.net)
 
 ## 这个代码库能够构建出什么？
 
-.NET Core relies heavily on the [Nuget](https://en.wikipedia.org/wiki/NuGet) package manager,
-which is a system to package, distribute and version software components.  See [https://www.nuget.org/](https://www.nuget.org/) 
-for more information on Nuget.   For now it is enough to know Nuget is a system that
-bundles components into `*.nupkg` files (which are ZIP archives) and these packages can be 'published' 
-either through a local file system path or by a URL (e.g. https://www.nuget.org/).   There are then tools 
-(e.g. Nuget.exe, Visual Studio, dotnet.exe) that based on a configuration file (.csproj) know 
-how to search these publishing locations and pull down consistent set of packages for the 
-application.   
+.NET Core 十分依赖 [Nuget](https://en.wikipedia.org/wiki/NuGet) 包管理器，后者负责打包、分发并管理软件组件的版本。参见 [https://www.nuget.org/](https://www.nuget.org/) 。现在你只需要知道，Nuget是一个将软件组件打包成 `*.nupkg` 包（其实是一个ZIP档案）的系统，这些包可以被 *发布* 到一个本地文件路径或者是一个URL上（例如， https://www.nuget.org/ ）。有一些工具（例如，Nuget.exe、Visual Studio、dotnet.exe）可以从配置文件（.csproj）中获知如何从这些发布地址查找并下载应用程序所需的软件包。   
 
 具体来讲，最好认为这个代码库保存的是如下Nuget包的源代码：
  
- * **Microsoft.NETCore.Runtime.CoreCLR** - Represents the object allocator, garbage collector (GC), class 
-   loader, type system, interop and the most fundamental parts of the .NET class library (e.g. 
-   System.Object, System.String ...) 
+ * **Microsoft.NETCore.Runtime.CoreCLR** - 包括对象分配器、垃圾收集器、类加载器、类型系统、interop和 .NET类库 中最最基础的内容（例如，System.Object, System.String ...）
 
 它还包括下面紧密相关的支持包的源代码：
 
- * **Microsoft.NETCore.Jit** - The Just In Time (JIT) compiler for the 
-   [.NET Intermediate language (IL)](https://en.wikipedia.org/wiki/Common_Intermediate_Language)
- * **Microsoft.NETCore.ILAsm** - An assembler for the 
-   [.NET Intermediate language (IL)](https://en.wikipedia.org/wiki/Common_Intermediate_Language)
- * **Microsoft.NETCore.ILDAsm** - A disassembler (Pretty printer) for the
-   [.NET Intermediate language (IL)](https://en.wikipedia.org/wiki/Common_Intermediate_Language)
+ * **Microsoft.NETCore.Jit** - [.NET Intermediate language (IL)](https://en.wikipedia.org/wiki/Common_Intermediate_Language) 的JIT编译器
+ * **Microsoft.NETCore.ILAsm** - [.NET Intermediate language (IL)](https://en.wikipedia.org/wiki/Common_Intermediate_Language) 的汇编器
+ * **Microsoft.NETCore.ILDAsm** - [.NET Intermediate language (IL)](https://en.wikipedia.org/wiki/Common_Intermediate_Language) 的反汇编器
  * **Microsoft.NETCore.TestHost** - This contains the corehost.exe program, which is a small wrapper 
    that uses the .NET Runtime to run IL DLLs passed to it on the command line.
  * **Microsoft.TargetingPack.Private.CoreCLR** - A set of assemblies that represent the compile time surface 
