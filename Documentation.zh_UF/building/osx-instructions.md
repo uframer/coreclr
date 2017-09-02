@@ -52,21 +52,31 @@ CoreFX加密库基于OpenSSL构建。OS X自带的OpenSSL版本（0.9.8）已经
 ```sh
 brew install openssl
 
+# NOTE
+# 下面的步骤只用于编译corefx，而且使用uframer-v2.0.0分支的话，就不需要下面的设
+# 置了。
+
 # We need to make the runtime libraries discoverable, as well as make
 # pkg-config be able to find the headers and current ABI version.
+# 我们需要保证在编译时pkgconfig能找到库，运行时程序也能找到库。
 #
 # Ensure the paths we will need exist
+# 请确保下面的路径存在
 mkdir -p /usr/local/lib/pkgconfig
 
 # The rest of these instructions assume a default Homebrew path of
 # /usr/local/opt/<module>, with /usr/local being the answer to
 # `brew --prefix`.
+# 下面的命令都假定你将Homebrew安装到了默认的位置`/usr/local/opt/<module>`，
+# 请确保`brew --prefix`的输出是`/usr/local`。
 #
 # Runtime dependencies
+# 运行时的依赖关系
 ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
 ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 
 # Compile-time dependences (for pkg-config)
+# 编译时的依赖关系（用于pkgconfig）
 ln -s /usr/local/opt/openssl/lib/pkgconfig/libcrypto.pc /usr/local/lib/pkgconfig/
 ln -s /usr/local/opt/openssl/lib/pkgconfig/libssl.pc /usr/local/lib/pkgconfig/
 ln -s /usr/local/opt/openssl/lib/pkgconfig/openssl.pc /usr/local/lib/pkgconfig/
